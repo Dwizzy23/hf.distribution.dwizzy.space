@@ -64,7 +64,7 @@
       transition: background-color 0.3s, color 0.3s;
       user-select: none;
     }
-    nav a:hover {
+    nav a:hover, nav a.active {
       background-color: var(--highlight);
       color: #000;
     }
@@ -92,22 +92,24 @@
       line-height: 1.6;
       margin-bottom: 1rem;
     }
-    /* Loudness Penalty System */
-    #loudness-penalty {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 400px;
-      margin-top: 1rem;
+
+    /* Style dla narzędzia do analizy głośności */
+    #loudness-tool {
+      max-width: 650px;
+      margin: 0 auto;
+      color: var(--text);
     }
-    #loudness-penalty input[type="file"] {
+    #loudness-tool input[type="file"] {
+      width: 100%;
       background: var(--border);
       border: none;
       padding: 0.5rem;
       color: var(--text);
       border-radius: 0.4rem;
+      margin-bottom: 1rem;
     }
-    #loudness-penalty button {
+    #loudness-tool button {
+      width: 100%;
       background-color: var(--accent);
       border: none;
       padding: 0.8rem;
@@ -116,82 +118,119 @@
       font-weight: 700;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin-bottom: 1rem;
     }
-    #loudness-penalty button:hover {
+    #loudness-tool button:hover:not(:disabled) {
       background-color: var(--highlight);
       color: #000;
     }
-    #loudness-result {
-      background-color: #222;
-      padding: 1rem;
-      border-radius: 0.6rem;
-      font-size: 1.1rem;
-      white-space: pre-wrap;
-      min-height: 60px;
+    #loudness-tool button:disabled {
+      background: #555;
+      cursor: not-allowed;
     }
-    footer {
-      background: #101010;
-      text-align: center;
-      padding: 2rem 1rem;
-      color: #888;
-      font-size: 0.9rem;
-      border-top: 1px solid #1a1a1a;
+    #result {
+      margin: 15px 0;
+      padding: 12px;
+      border-radius: 5px;
+      display: none;
+      font-weight: 600;
     }
-    .icon-bar {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
+    .result.ok {
+      background-color: #155724;
+      border: 1px solid #28a745;
+      color: #d4edda;
     }
-    .icon-bar a {
-      color: var(--accent);
-      font-size: 1.8rem;
-      transition: color 0.3s;
+    .result.fail {
+      background-color: #721c24;
+      border: 1px solid #dc3545;
+      color: #f8d7da;
     }
-    .icon-bar a:hover {
-      color: var(--highlight);
+    .platforms {
+      margin: 15px 0;
+      padding: 10px;
+      background: #2f2f2f;
+      border-radius: 5px;
+      display: none;
+    }
+    .platforms label {
+      display: inline-block;
+      margin-right: 15px;
+      cursor: pointer;
+    }
+    #nextStepBtn {
+      display: none;
+      width: 100%;
     }
   </style>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
     <h1>hf.distribution.pl</h1>
-    <p>Plany, Dystrybucja, Narzędzia AI, Smartlinki, Koncerty, Merch, Radio, Mixmaster</p>
-    <div class="icon-bar">
-      <a href="https://open.spotify.com/album/39YBdq28KXf99JQKKsKr5U" target="_blank" title="Spotify"><i class="fab fa-spotify"></i></a>
-      <a href="https://instagram.com/have.fckd" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-    </div>
-    <nav>
-      <a href="#plany">Plany</a>
-      <a href="#dystrybucja">Dystrybucja</a>
-      <a href="#smartlinki">Smartlinki</a>
-      <a href="#koncerty">Koncerty</a>
-      <a href="#merch">Merch</a>
-      <a href="#radio">Radio</a>
-      <a href="#mixmaster">Mixmaster</a>
-      <a href="#donate">Donate</a>
-      <a href="#kontakt">Kontakt</a>
-    </nav>
+    <p>AI Dystrybucja Muzyki - Twój portal do łatwego wydawania utworów</p>
   </header>
-
+  <nav>
+    <a href="#" class="active" data-tab="home">Strona główna</a>
+    <a href="#" data-tab="dystrybucja">Dystrybucja</a>
+    <a href="#" data-tab="kontakt">Kontakt</a>
+  </nav>
   <main>
-    <section id="plany">
-      <h2>Plany</h2>
-      <p>Nasze plany rozwoju platformy obejmują ciągłe ulepszanie narzędzi AI, integrację z serwisami muzycznymi oraz organizację koncertów i merchu.</p>
+    <section id="home" class="tab-content" style="display:block;">
+      <h2>Witamy na hf.distribution.pl</h2>
+      <p>Tu znajdziesz narzędzia i wsparcie do dystrybucji muzyki z pomocą AI.</p>
     </section>
 
-    <section id="dystrybucja">
-      <h2>Dystrybucja i narzędzia AI</h2>
-      <p>W sekcji dystrybucji znajdziesz wszystko, co potrzebne do skutecznego wydania Twojej muzyki. Obejmuje to:</p>
-      <ul>
-        <li>Narzędzia AI wspierające proces dystrybucji i analizy muzyki</li>
-        <li>Integrację z YouTube API do zarządzania i monitorowania Twoich kanałów</li>
-        <li><strong>Loudness Penalty System</strong> - bezpłatne narzędzie do analizy głośności Twoich utworów i wykrywania ewentualnych kar na platformach streamingowych</li>
-      </ul>
+    <section id="dystrybucja" class="tab-content" style="display:none;">
+      <h2>Analiza Głośności Utworu i Dystrybucja</h2>
+      <p>Sprawdź, czy Twój mastering spełnia wymagania i wybierz platformy do dystrybucji.</p>
+      <div id="loudness-tool">
+        <input type="file" id="audioFile" accept="audio/mpeg, audio/wav" />
+        <button id="analyzeBtn" disabled>Sprawdź głośność</button>
 
-      <div id="loudness-penalty">
-        <label for="audio-file">Wybierz plik audio (mp3, wav):</label>
-        <input type="file" id="audio-file" accept="audio/*" />
-        <button id="analyze-btn">Analizuj Loudness Penalty</button>
-        <div id="
+        <div id="result" class="result"></div>
+
+        <div class="platforms" id="platformsSection">
+          <p><strong>Na jakie platformy chcesz dystrybuować swój utwór? (zaznacz)</strong></p>
+          <label><input type="checkbox" value="spotify" /> Spotify</label>
+          <label><input type="checkbox" value="apple_music" /> Apple Music</label>
+          <label><input type="checkbox" value="tidal" /> Tidal</label>
+          <label><input type="checkbox" value="youtube" /> YouTube</label>
+          <label><input type="checkbox" value="soundcloud" /> SoundCloud</label>
+          <label><input type="checkbox" value="shazam" /> Shazam</label>
+        </div>
+
+        <button id="nextStepBtn" disabled>Dalej - Przejdź do kolejnego kroku dystrybucji</button>
+      </div>
+    </section>
+
+    <section id="kontakt" class="tab-content" style="display:none;">
+      <h2>Kontakt</h2>
+      <p>Masz pytania? Skontaktuj się z nami!</p>
+      <p>Email: kontakt@hf.distribution.pl</p>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 hf.distribution.pl — Wszystkie prawa zastrzeżone
+  </footer>
+
+  <script>
+    // Prosta obsługa zakładek
+    const tabs = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('main section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+        const target = tab.getAttribute('data-tab');
+
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        sections.forEach(section => {
+          section.style.display = (section.id === target) ? 'block' : 'none';
+        });
+      });
+    });
+
+    // Kod do narzędzia analizy głośności
+    const audioInput = document.getElementById('audioFile');
+    const analyzeBtn = document.get
