@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dystrybucja - Loudness Penalty</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
+  h1 { color: #222; }
+  .info { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+  .result { font-weight: bold; margin-top: 15px; }
+  .ok { color: green; }
+  .fail { color: red; }
+  .icons { margin-top: 20px; display: none; }
+  .icons img { width: 40px; margin-right: 10px; vertical-align: middle; }
+  .checkboxes { margin-top: 15px; display: none; }
+  .checkboxes label { margin-right: 15px; }
+</style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>hf.distribution.pl - AI Dystrybucja Muzyki</title>
@@ -173,6 +188,65 @@
     </div>
   </header>
 
+<h1>Dystrybucja — Wymóg Głośności (LOUDNESS PENALTY)</h1>
+
+<div class="info">
+  <p>Utwór musi mieć głośność w zakresie:</p>
+  <ul>
+    <li><b>Optymalny poziom:</b> około <b>-10 LUFS</b> (ok. +3.5 dB)</li>
+    <li><b>Maksymalny poziom:</b> do <b>-8 LUFS</b> (ok. +6 dB)</li>
+  </ul>
+  <p>Poziomy powyżej -8 LUFS skutkują <b>loudness penalty</b> (tłumienie głośności na platformach).</p>
+  <p>Po spełnieniu wymogu odblokowują się ptaszki potwierdzające i ikonki platform streamingowych.</p>
+</div>
+
+<label for="lufsInput">Wprowadź zmierzoną wartość LUFS (np. -9.5):</label><br/>
+<input type="number" id="lufsInput" step="0.1" min="-20" max="0" placeholder="-10" />
+<button onclick="checkLoudness()">Sprawdź głośność</button>
+
+<div class="result" id="result"></div>
+
+<div class="checkboxes" id="checkboxes">
+  <label><input type="checkbox" checked disabled /> Wymóg LUFS spełniony</label>
+  <label><input type="checkbox" checked disabled /> Gotowe do dystrybucji</label>
+</div>
+
+<div class="icons" id="icons">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Spotify_logo_2015.svg" alt="Spotify" title="Spotify" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Apple_Music_logo.svg/1200px-Apple_Music_logo.svg.png" alt="Apple Music" title="Apple Music" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Deezer_logo.svg" alt="Deezer" title="Deezer" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/YouTube_Music_logo.svg" alt="YouTube Music" title="YouTube Music" />
+</div>
+
+<script>
+function checkLoudness() {
+  const lufsValue = parseFloat(document.getElementById('lufsInput').value);
+  const resultDiv = document.getElementById('result');
+  const checkboxes = document.getElementById('checkboxes');
+  const icons = document.getElementById('icons');
+
+  if (isNaN(lufsValue)) {
+    resultDiv.textContent = 'Proszę podać poprawną wartość LUFS.';
+    resultDiv.className = 'result fail';
+    checkboxes.style.display = 'none';
+    icons.style.display = 'none';
+    return;
+  }
+
+  // Zakres dozwolony: od -10 do -8 LUFS
+  if (lufsValue >= -10 && lufsValue <= -8) {
+    resultDiv.textContent = `LUFS: ${lufsValue} — Spełnia wymogi!`;
+    resultDiv.className = 'result ok';
+    checkboxes.style.display = 'block';
+    icons.style.display = 'block';
+  } else {
+    resultDiv.textContent = `LUFS: ${lufsValue} — Nie spełnia wymogów. Musi być między -10 a -8 LUFS.`;
+    resultDiv.className = 'result fail';
+    checkboxes.style.display = 'none';
+    icons.style.display = 'none';
+  }
+}
+</script>
   <section id="donate" class="feature">
     <h2>Wspieraj nasz projekt</h2>
     <p>Każdy grosz pomaga w rozwoju niezależnej dystrybucji muzyki i narzędzi AI.</p>
