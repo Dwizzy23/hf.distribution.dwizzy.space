@@ -1,236 +1,83 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>hf.distribution.pl - AI Dystrybucja Muzyki</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    :root {
-      --main-bg: #0a0a0a;
-      --accent: #a347ff;
-      --text: #e2e2e2;
-      --box-bg: #141414;
-      --border: #2f2f2f;
-      --highlight: #61ffca;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: var(--main-bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background-color: #080808;
-      padding: 2rem 1rem;
-      text-align: center;
-      color: var(--accent);
-    }
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.3rem;
-    }
-    header p {
-      font-weight: 500;
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-    nav {
-      background-color: #121212;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-      gap: 1rem;
-    }
-    nav a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 0.6rem;
-      transition: background-color 0.3s, color 0.3s;
-      user-select: none;
-    }
-    nav a:hover, nav a.active {
-      background-color: var(--highlight);
-      color: #000;
-    }
-    main {
-      flex-grow: 1;
-      max-width: 1100px;
-      margin: 2rem auto 4rem;
-      padding: 0 1rem;
-      width: 100%;
-    }
-    section {
-      background: var(--box-bg);
-      border-radius: 1rem;
-      padding: 2rem;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-      box-shadow: 0 0 25px rgba(163, 71, 255, 0.1);
-    }
-    section h2 {
-      color: var(--accent);
-      margin-bottom: 1rem;
-      font-size: 2rem;
-    }
-    section p {
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    /* Style dla narzędzia do analizy głośności */
-    #loudness-tool {
-      max-width: 650px;
-      margin: 0 auto;
-      color: var(--text);
-    }
-    #loudness-tool input[type="file"] {
-      width: 100%;
-      background: var(--border);
-      border: none;
-      padding: 0.5rem;
-      color: var(--text);
-      border-radius: 0.4rem;
-      margin-bottom: 1rem;
-    }
-    #loudness-tool button {
-      width: 100%;
-      background-color: var(--accent);
-      border: none;
-      padding: 0.8rem;
-      border-radius: 0.8rem;
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin-bottom: 1rem;
-    }
-    #loudness-tool button:hover:not(:disabled) {
-      background-color: var(--highlight);
-      color: #000;
-    }
-    #loudness-tool button:disabled {
-      background: #555;
-      cursor: not-allowed;
-    }
-    #result {
-      margin: 15px 0;
-      padding: 12px;
-      border-radius: 5px;
-      display: none;
-      font-weight: 600;
-    }
-    .result.ok {
-      background-color: #155724;
-      border: 1px solid #28a745;
-      color: #d4edda;
-    }
-    .result.fail {
-      background-color: #721c24;
-      border: 1px solid #dc3545;
-      color: #f8d7da;
-    }
-    .platforms {
-      margin: 15px 0;
-      padding: 10px;
-      background: #2f2f2f;
-      border-radius: 5px;
-      display: none;
-    }
-    .platforms label {
-      display: inline-block;
-      margin-right: 15px;
-      cursor: pointer;
-    }
-    #nextStepBtn {
-      display: none;
-      width: 100%;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dystrybucja - Loudness Penalty</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
+  h1 { color: #222; }
+  .info { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+  .result { font-weight: bold; margin-top: 15px; }
+  .ok { color: green; }
+  .fail { color: red; }
+  .icons { margin-top: 20px; display: none; }
+  .icons img { width: 40px; margin-right: 10px; vertical-align: middle; }
+  .checkboxes { margin-top: 15px; display: none; }
+  .checkboxes label { margin-right: 15px; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>hf.distribution.pl</h1>
-    <p>AI Dystrybucja Muzyki - Twój portal do łatwego wydawania utworów</p>
-  </header>
-  <nav>
-    <a href="#" class="active" data-tab="home">Strona główna</a>
-    <a href="#" data-tab="dystrybucja">Dystrybucja</a>
-    <a href="#" data-tab="kontakt">Kontakt</a>
-  </nav>
-  <main>
-    <section id="home" class="tab-content" style="display:block;">
-      <h2>Witamy na hf.distribution.pl</h2>
-      <p>Tu znajdziesz narzędzia i wsparcie do dystrybucji muzyki z pomocą AI.</p>
-    </section>
 
-    <section id="dystrybucja" class="tab-content" style="display:none;">
-      <h2>Analiza Głośności Utworu i Dystrybucja</h2>
-      <p>Sprawdź, czy Twój mastering spełnia wymagania i wybierz platformy do dystrybucji.</p>
-      <div id="loudness-tool">
-        <input type="file" id="audioFile" accept="audio/mpeg, audio/wav" />
-        <button id="analyzeBtn" disabled>Sprawdź głośność</button>
+<h1>Dystrybucja — Wymóg Głośności (LOUDNESS PENALTY)</h1>
 
-        <div id="result" class="result"></div>
+<div class="info">
+  <p>Utwór musi mieć głośność w zakresie:</p>
+  <ul>
+    <li><b>Optymalny poziom:</b> około <b>-10 LUFS</b> (ok. +3.5 dB)</li>
+    <li><b>Maksymalny poziom:</b> do <b>-8 LUFS</b> (ok. +6 dB)</li>
+  </ul>
+  <p>Poziomy powyżej -8 LUFS skutkują <b>loudness penalty</b> (tłumienie głośności na platformach).</p>
+  <p>Po spełnieniu wymogu odblokowują się ptaszki potwierdzające i ikonki platform streamingowych.</p>
+</div>
 
-        <div class="platforms" id="platformsSection">
-          <p><strong>Na jakie platformy chcesz dystrybuować swój utwór? (zaznacz)</strong></p>
-          <label><input type="checkbox" value="spotify" /> Spotify</label>
-          <label><input type="checkbox" value="apple_music" /> Apple Music</label>
-          <label><input type="checkbox" value="tidal" /> Tidal</label>
-          <label><input type="checkbox" value="youtube" /> YouTube</label>
-          <label><input type="checkbox" value="soundcloud" /> SoundCloud</label>
-          <label><input type="checkbox" value="shazam" /> Shazam</label>
-        </div>
+<label for="lufsInput">Wprowadź zmierzoną wartość LUFS (np. -9.5):</label><br/>
+<input type="number" id="lufsInput" step="0.1" min="-20" max="0" placeholder="-10" />
+<button onclick="checkLoudness()">Sprawdź głośność</button>
 
-        <button id="nextStepBtn" disabled>Dalej - Przejdź do kolejnego kroku dystrybucji</button>
-      </div>
-    </section>
+<div class="result" id="result"></div>
 
-    <section id="kontakt" class="tab-content" style="display:none;">
-      <h2>Kontakt</h2>
-      <p>Masz pytania? Skontaktuj się z nami!</p>
-      <p>Email: kontakt@hf.distribution.pl</p>
-    </section>
-  </main>
-  <footer>
-    &copy; 2025 hf.distribution.pl — Wszystkie prawa zastrzeżone
-  </footer>
+<div class="checkboxes" id="checkboxes">
+  <label><input type="checkbox" checked disabled /> Wymóg LUFS spełniony</label>
+  <label><input type="checkbox" checked disabled /> Gotowe do dystrybucji</label>
+</div>
 
-  <script>
-    // Prosta obsługa zakładek
-    const tabs = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('main section');
+<div class="icons" id="icons">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Spotify_logo_2015.svg" alt="Spotify" title="Spotify" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Apple_Music_logo.svg/1200px-Apple_Music_logo.svg.png" alt="Apple Music" title="Apple Music" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Deezer_logo.svg" alt="Deezer" title="Deezer" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/YouTube_Music_logo.svg" alt="YouTube Music" title="YouTube Music" />
+</div>
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', e => {
-        e.preventDefault();
-        const target = tab.getAttribute('data-tab');
+<script>
+function checkLoudness() {
+  const lufsValue = parseFloat(document.getElementById('lufsInput').value);
+  const resultDiv = document.getElementById('result');
+  const checkboxes = document.getElementById('checkboxes');
+  const icons = document.getElementById('icons');
 
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+  if (isNaN(lufsValue)) {
+    resultDiv.textContent = 'Proszę podać poprawną wartość LUFS.';
+    resultDiv.className = 'result fail';
+    checkboxes.style.display = 'none';
+    icons.style.display = 'none';
+    return;
+  }
 
-        sections.forEach(section => {
-          section.style.display = (section.id === target) ? 'block' : 'none';
-        });
-      });
-    });
+  // Zakres dozwolony: od -10 do -8 LUFS
+  if (lufsValue >= -10 && lufsValue <= -8) {
+    resultDiv.textContent = `LUFS: ${lufsValue} — Spełnia wymogi!`;
+    resultDiv.className = 'result ok';
+    checkboxes.style.display = 'block';
+    icons.style.display = 'block';
+  } else {
+    resultDiv.textContent = `LUFS: ${lufsValue} — Nie spełnia wymogów. Musi być między -10 a -8 LUFS.`;
+    resultDiv.className = 'result fail';
+    checkboxes.style.display = 'none';
+    icons.style.display = 'none';
+  }
+}
+</script>
 
-    // Kod do narzędzia analizy głośności
-    const audioInput = document.getElementById('audioFile');
-    const analyzeBtn = document.get
+</body>
+</html>
