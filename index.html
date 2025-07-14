@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HAVE FVCKED | AI Dystrybucja Muzyki</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>hf.distribution.pl - AI Dystrybucja Muzyki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+  />
   <style>
     :root {
       --main-bg: #0b0b0e;
@@ -13,6 +16,7 @@
       --text: #e2e2e2;
       --box-bg: #161616;
       --border: #2a2a2a;
+      --link-hover: #ff69b4;
     }
     * {
       margin: 0;
@@ -20,41 +24,47 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       background: var(--main-bg);
       color: var(--text);
+      line-height: 1.6;
     }
     header {
-      background: url('https://images.unsplash.com/photo-1605902711622-cfb43c4437d1?auto=format&fit=crop&w=1950&q=80') no-repeat center center;
+      background: url("https://images.unsplash.com/photo-1605902711622-cfb43c4437d1?auto=format&fit=crop&w=1950&q=80")
+        no-repeat center center;
       background-size: cover;
       padding: 4rem 2rem;
       text-align: center;
       color: white;
+      text-shadow: 0 0 15px rgba(255, 60, 144, 0.6);
     }
     header h1 {
       font-size: 3rem;
-      text-shadow: 0 0 15px rgba(255, 60, 144, 0.6);
+      margin-bottom: 0.5rem;
     }
     nav {
       background-color: #101014;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       padding: 1rem 0;
       border-bottom: 1px solid var(--border);
+      gap: 1rem;
     }
     nav a {
-      margin: 0 1.5rem;
       color: var(--text);
       text-decoration: none;
       font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      transition: color 0.3s ease;
     }
     nav a:hover {
-      color: var(--accent);
+      color: var(--link-hover);
     }
     section {
       max-width: 1200px;
-      margin: auto;
-      padding: 3rem 1.5rem;
+      margin: 2rem auto 3rem;
+      padding: 0 1.5rem;
     }
     .feature {
       background: var(--box-bg);
@@ -67,9 +77,22 @@
     .feature h2 {
       color: var(--accent);
       margin-bottom: 1rem;
+      font-weight: 700;
     }
-    .feature p {
-      line-height: 1.6;
+    .feature p,
+    .feature ul {
+      margin-top: 0.5rem;
+    }
+    .feature ul {
+      list-style: inside disc;
+      margin-left: 1rem;
+    }
+    .feature a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    .feature a:hover {
+      color: var(--link-hover);
     }
     footer {
       background: #0a0a0a;
@@ -79,59 +102,111 @@
       font-size: 0.9rem;
       border-top: 1px solid #1a1a1a;
     }
+    #chatbot {
+      background: #222;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      height: 300px;
+      overflow-y: auto;
+      color: #eee;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>HAVE FVCKED</h1>
-    <p>AI-Driven Music Distribution & Creative Intelligence</p>
+    <h1>hf.distribution.pl</h1>
+    <p>Dystrybucja muzyki, smartlinki i automatyzacja AI</p>
   </header>
 
   <nav>
-    <a href="#dystrybucja">Dystrybucja</a>
-    <a href="#agent">Agent AI</a>
-    <a href="#smartlinki">Smartlinki</a>
-    <a href="#sklep">Sklep</a>
-    <a href="#statystyki">Statystyki</a>
+    <a href="#plany">Plany</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="#platformy">Platformy</a>
+    <a href="#donate">Donaty</a>
+    <a href="#support">Support</a>
   </nav>
 
-  <section id="dystrybucja">
+  <section id="plany">
     <div class="feature">
-      <h2>🎧 Dystrybucja</h2>
-      <p>Twoja muzyka ląduje na Spotify, Apple Music, Tidal i YouTube automatycznie. Współpracujemy z TuneCore i DistroKid. Wrzucasz plik, resztą zajmuje się nasz AI.</p>
+      <h2>💡 Plany</h2>
+      <p>Wybierz plan dopasowany do Twoich potrzeb:</p>
+      <ul>
+        <li><strong>Podstawowy (29$/rok):</strong> Dystrybucja na wszystkie platformy, brak statystyk.</li>
+        <li>
+          <strong>Premium (49$/rok):</strong> Wszystko z planu podstawowego + automatyczne teksty,
+          analizy, AI-marketing, SmartLink, YouTube & SoundCloud jako dodatki.
+        </li>
+      </ul>
+      <p>
+        ⚙️ YouTube: Wymagany format AV01AVI, od +3.5 dB do +6 dB<br />
+        Możliwe API Loadless Penalty dla weryfikacji.<br />
+        🎵 SoundCloud: Osobna opcja integracji.
+      </p>
     </div>
   </section>
 
-  <section id="agent">
+  <section id="kontakt">
     <div class="feature">
-      <h2>🤖 Agent AI</h2>
-      <p>Asystent AI analizuje pliki, generuje tytuły, opisy, teksty i tagi. Obsługujemy też rozpoznawanie głosu (Whisper API), generowanie grafik (DALL·E) i metadanych.</p>
+      <h2>📨 Kontakt</h2>
+      <p>
+        Mail: <a href="mailto:support@hf.distribution.pl">support@hf.distribution.pl</a><br />
+        Discord: <a href="https://dsc.gg/havefvcked" target="_blank" rel="noopener noreferrer">dsc.gg/havefvcked</a><br />
+        YouTube: <a href="https://youtube.com/hfdistribution" target="_blank" rel="noopener noreferrer">youtube.com/hfdistribution</a><br />
+        Instagram: <a href="https://instagram.com/hfdistribution" target="_blank" rel="noopener noreferrer">instagram.com/hfdistribution</a><br />
+        Spotify: <a href="https://open.spotify.com/user/hfdistribution" target="_blank" rel="noopener noreferrer">spotify.com/hfdistribution</a><br />
+        Apple Music: <a href="https://music.apple.com/profile/hfdistribution" target="_blank" rel="noopener noreferrer">music.apple.com/hfdistribution</a><br />
+        Tidal: <a href="https://tidal.com/user/hfdistribution" target="_blank" rel="noopener noreferrer">tidal.com/hfdistribution</a><br />
+        Dwizzy.space: <a href="https://dwizzy.space/hfdistribution" target="_blank" rel="noopener noreferrer">dwizzy.space/hfdistribution</a>
+      </p>
     </div>
   </section>
 
-  <section id="smartlinki">
+  <section id="platformy">
     <div class="feature">
-      <h2>🔗 Smartlinki</h2>
-      <p>Linki do utworu generowane automatycznie w formacie: <code>hf.distribution.pl/artysta-tytul-prod/feat</code>. Stylowe linki z grafiką okładki + Shazam/Soundcloud.</p>
+      <h2>🎧 Platformy streamingowe i dystrybucja</h2>
+      <p>
+        Wspieramy dystrybucję na najpopularniejszych platformach:<br />
+        Spotify, Apple Music, Tidal, SoundCloud, YouTube (format AV01AVI, +3.5 do +6 dB), Dwizzy.space i inne.
+      </p>
+      <p>
+        Automatyczna weryfikacja jakości materiału dzięki integracji z API Loadless Penalty lub podobnym serwisem.
+      </p>
     </div>
   </section>
 
-  <section id="sklep">
+  <section id="donate">
     <div class="feature">
-      <h2>💼 Sklep z Paczkami</h2>
-      <p>Preset packi, sample, VST, pliki ZIP i inne dodatki sprzedawane przez platformę zintegrowaną z BuyCoffee, PayNow i Strefą Płatności.</p>
+      <h2>💸 Donaty</h2>
+      <p>
+        Wspieraj rozwój platformy dobrowolnie. Możesz przekazać donację przez:<br />
+        <a href="https://buycoffee.to/hfdistribution" target="_blank" rel="noopener noreferrer">BuyCoffee</a>,<br />
+        <a href="https://www.paypal.me/hfdistribution" target="_blank" rel="noopener noreferrer">PayPal</a>,<br />
+        <a href="https://revolut.me/hfdistribution" target="_blank" rel="noopener noreferrer">Revolut</a>
+      </p>
     </div>
   </section>
 
-  <section id="statystyki">
+  <section id="support">
     <div class="feature">
-      <h2>📊 Monitoring i Statystyki</h2>
-      <p>Zbieraj dane z DSP, Shazama, monitoruj użycie Twoich bitów. AI powiadomi Cię, gdzie i kto opublikował Twoje dźwięki.</p>
+      <h2>🤖 Support - AI Chatbot</h2>
+      <p>
+        Masz pytania? Skorzystaj z naszego AI chatbota, który pomoże Ci szybko znaleźć
+        odpowiedzi lub skontaktować się z nami.
+      </p>
+      <div id="chatbot">
+        <p><em>Chatbot AI jest w budowie — wkrótce dostępny!</em></p>
+      </div>
     </div>
   </section>
 
   <footer>
-    © 2025 HAVE FVCKED | Discord Hive Fact — AI kreatywność bez kompromisów
+    © 2025 hf.distribution.pl | Subdomeny:
+    radio.hf.distribution.pl,
+    merch.hf.distribution.pl,
+    koncerty.hf.distribution.pl,
+    ai.hf.distribution.pl
   </footer>
 </body>
 </html>
