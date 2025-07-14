@@ -6,17 +6,17 @@
   <title>hf.distribution.pl - AI Dystrybucja Muzyki</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
-    rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+    rel="stylesheet"
   />
   <style>
     :root {
-      --main-bg: #0b0b0e;
-      --accent: #ff3c90;
+      --main-bg: #0a0a0a;
+      --accent: #a347ff;
       --text: #e2e2e2;
-      --box-bg: #161616;
-      --border: #2a2a2a;
-      --link-hover: #ff69b4;
+      --box-bg: #141414;
+      --border: #2f2f2f;
+      --highlight: #61ffca;
     }
     * {
       margin: 0;
@@ -24,26 +24,30 @@
       box-sizing: border-box;
     }
     body {
-      font-family: "Montserrat", sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: var(--main-bg);
       color: var(--text);
-      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     header {
-      background: url("https://images.unsplash.com/photo-1605902711622-cfb43c4437d1?auto=format&fit=crop&w=1950&q=80")
-        no-repeat center center;
-      background-size: cover;
-      padding: 4rem 2rem;
+      background-color: #080808;
+      padding: 2rem 1rem;
       text-align: center;
-      color: white;
-      text-shadow: 0 0 15px rgba(255, 60, 144, 0.6);
+      color: var(--accent);
     }
     header h1 {
       font-size: 3rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    header p {
+      font-weight: 500;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
     }
     nav {
-      background-color: #101014;
+      background-color: #121212;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -55,268 +59,139 @@
       color: var(--text);
       text-decoration: none;
       font-weight: 600;
-      padding: 0.25rem 0.5rem;
-      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 0.6rem;
+      transition: background-color 0.3s, color 0.3s;
+      user-select: none;
     }
     nav a:hover {
-      color: var(--link-hover);
+      background-color: var(--highlight);
+      color: #000;
+    }
+    main {
+      flex-grow: 1;
+      max-width: 1100px;
+      margin: 2rem auto 4rem;
+      padding: 0 1rem;
+      width: 100%;
     }
     section {
-      max-width: 1200px;
-      margin: 2rem auto 3rem;
-      padding: 0 1.5rem;
-    }
-    .feature {
       background: var(--box-bg);
-      padding: 2rem;
       border-radius: 1rem;
-      margin-bottom: 2rem;
+      padding: 2rem;
+      margin-bottom: 3rem;
       border: 1px solid var(--border);
-      box-shadow: 0 0 25px rgba(255, 60, 144, 0.05);
+      box-shadow: 0 0 25px rgba(163, 71, 255, 0.1);
     }
-    .feature h2 {
+    section h2 {
       color: var(--accent);
       margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    section p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    /* Loudness Penalty System */
+    #loudness-penalty {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 400px;
+      margin-top: 1rem;
+    }
+    #loudness-penalty input[type="file"] {
+      background: var(--border);
+      border: none;
+      padding: 0.5rem;
+      color: var(--text);
+      border-radius: 0.4rem;
+    }
+    #loudness-penalty button {
+      background-color: var(--accent);
+      border: none;
+      padding: 0.8rem;
+      border-radius: 0.8rem;
+      color: white;
       font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
-    .feature p,
-    .feature ul {
-      margin-top: 0.5rem;
-      font-size: 1rem;
+    #loudness-penalty button:hover {
+      background-color: var(--highlight);
+      color: #000;
     }
-    .feature ul {
-      list-style: inside disc;
-      margin-left: 1rem;
-    }
-    .feature a {
-      color: var(--accent);
-      text-decoration: underline;
-    }
-    .feature a:hover {
-      color: var(--link-hover);
+    #loudness-result {
+      background-color: #222;
+      padding: 1rem;
+      border-radius: 0.6rem;
+      font-size: 1.1rem;
+      white-space: pre-wrap;
+      min-height: 60px;
     }
     footer {
-      background: #0a0a0a;
+      background: #101010;
       text-align: center;
-      padding: 2rem;
+      padding: 2rem 1rem;
       color: #888;
       font-size: 0.9rem;
       border-top: 1px solid #1a1a1a;
     }
-    #chatbot {
-      background: #222;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      height: 300px;
-      overflow-y: auto;
-      color: #eee;
-      font-family: monospace;
-      white-space: pre-wrap;
+    .icon-bar {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
     }
-
-    <section id="smartlink">
-  <div class="feature">
-    <h2>🔗 SmartLinki</h2>
-    <p>
-      Twórz unikalne linki promocyjne, które łączą wszystkie najważniejsze platformy streamingowe i social media w jednym miejscu.
-      Idealne do dzielenia się nowymi utworami z fanami – niezależnie od tego, gdzie słuchają muzyki.
-    </p>
-    <p><strong>Przykład SmartLinka:</strong><br>
-      <a href="https://hf.distribution.pl/kosjusz-insomnia2-prod/hfdistribution" target="_blank">hf.distribution.pl/kosjusz-insomnia2-prod/hfdistribution</a>
-    </p>
-    <ul class="checkbox-group">
-      <li>✅ Linki do Spotify, Apple Music, YouTube, Tidal, Instagram, Your Site</li>
-      <li>✅ Wersja z AI do automatycznego generowania linków na podstawie danych</li>
-      <li>✅ Możliwość personalizacji wyglądu</li>
-      <li>✅ Statystyki kliknięć i zachowań użytkowników (w planie Premium)</li>
-    </ul>
-  </div>
-</section>
-
-    
+    .icon-bar a {
+      color: var(--accent);
+      font-size: 1.8rem;
+      transition: color 0.3s;
+    }
+    .icon-bar a:hover {
+      color: var(--highlight);
+    }
   </style>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
     <h1>hf.distribution.pl</h1>
-    <p>To nie tylko - Dystrybucja muzyki to cos wiecej + automatyzacja AI</p>
+    <p>Plany, Dystrybucja, Narzędzia AI, Smartlinki, Koncerty, Merch, Radio, Mixmaster</p>
+    <div class="icon-bar">
+      <a href="https://open.spotify.com/album/39YBdq28KXf99JQKKsKr5U" target="_blank" title="Spotify"><i class="fab fa-spotify"></i></a>
+      <a href="https://instagram.com/have.fckd" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+    <nav>
+      <a href="#plany">Plany</a>
+      <a href="#dystrybucja">Dystrybucja</a>
+      <a href="#smartlinki">Smartlinki</a>
+      <a href="#koncerty">Koncerty</a>
+      <a href="#merch">Merch</a>
+      <a href="#radio">Radio</a>
+      <a href="#mixmaster">Mixmaster</a>
+      <a href="#donate">Donate</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#plany">Plany</a>
-    <a href="#kontakt">Kontakt</a>
-    <a href="#platformy">Platformy</a>
-    <a href="#donate">Donaty</a>
-    <a href="#support">Support</a>
-    <a href="#merch">Merch</a>
-    <a href="#radio">Radio</a>
-    <a href="#koncerty">Koncerty</a>
-    <a href="#ai">AI</a>
-    <a href="#statystyki">Statystyki</a>
-  </nav>
+  <main>
+    <section id="plany">
+      <h2>Plany</h2>
+      <p>Nasze plany rozwoju platformy obejmują ciągłe ulepszanie narzędzi AI, integrację z serwisami muzycznymi oraz organizację koncertów i merchu.</p>
+    </section>
 
-  <section id="plany">
-    <div class="feature">
-      <h2>💡 Plany</h2>
-      <p>Nasza oferta została stworzona tak, by dopasować się do różnych potrzeb artystów i producentów. Oto dostępne plany:</p>
+    <section id="dystrybucja">
+      <h2>Dystrybucja i narzędzia AI</h2>
+      <p>W sekcji dystrybucji znajdziesz wszystko, co potrzebne do skutecznego wydania Twojej muzyki. Obejmuje to:</p>
       <ul>
-        <li>
-          <strong>Radio Under HF [free]</strong><br />
-          <strong>Podstawowy (29 USD / rok):</strong><br />
-          - Dystrybucja Twojej muzyki na wszystkie główne platformy streamingowe.<br />
-          - Brak dostępu do zaawansowanych statystyk.<br />
-          - Możliwość dodania do serwisu smartlinków.<br />
-          - Proste raportowanie i podstawowe wsparcie.
-        </li>
-        <li>
-          <strong>Premium (49 USD / rok):</strong><br />
-          - Wszystko z planu podstawowego.<br />
-          - Automatyczne generowanie tekstów piosenek z plików audio.<br />
-          - Zaawansowane analizy statystyk odtworzeń i zaangażowania słuchaczy.<br />
-          - Integracja z AI do marketingu i promocji.<br />
-          - Wsparcie dla formatu AV01AVI na YouTube (wymagany gain +3.5 do +6 dB).<br />
-          - Możliwość dystrybucji na SoundCloud i Dwizzy.space jako hostingu plikow (dysk, chmura) <br />
-          - Dostęp do panelu zarządzania smartlinkami i łatwe udostępnianie.
-          - Koncerty HF
-          - Radio
-        </li>
+        <li>Narzędzia AI wspierające proces dystrybucji i analizy muzyki</li>
+        <li>Integrację z YouTube API do zarządzania i monitorowania Twoich kanałów</li>
+        <li><strong>Loudness Penalty System</strong> - bezpłatne narzędzie do analizy głośności Twoich utworów i wykrywania ewentualnych kar na platformach streamingowych</li>
       </ul>
-      <p><em>Wszystkie plany mogą być rozbudowywane i dostosowywane pod indywidualne potrzeby — skontaktuj się z nami!</em></p>
-    </div>
-  </section>
 
-  <section id="kontakt">
-    <div class="feature">
-      <h2>📨 Kontakt</h2>
-      <p>Jesteśmy dostępni na różnych platformach społecznościowych oraz bezpośrednio przez email. Chętnie odpowiemy na Twoje pytania!</p>
-      <ul>
-        <li><strong>Email:</strong> <a href="mailto:support@hf.distribution.pl">support@hf.distribution.pl</a></li>
-        <li><strong>Discord:</strong> <a href="https://dsc.gg/havefvcked" target="_blank" rel="noopener noreferrer">dsc.gg/havefvcked</a> – dołącz do naszej społeczności, aby otrzymywać szybkie wsparcie i informacje</li>
-        <li><strong>YouTube:</strong> <a href="https://youtube.com/hfdistribution" target="_blank" rel="noopener noreferrer">youtube.com/hfdistribution</a> – tutoriale, poradniki i aktualności</li>
-        <li><strong>Instagram:</strong> <a href="https://instagram.com/hfdistribution" target="_blank" rel="noopener noreferrer">instagram.com/hfdistribution</a> – aktualizacje i nowości w obrazach</li>
-        <li><strong>Spotify:</strong> <a href="https://open.spotify.com/user/hfdistribution" target="_blank" rel="noopener noreferrer">spotify.com/hfdistribution</a> – nasze playlisty i dystrybucje</li>
-        <li><strong>Apple Music:</strong> <a href="https://music.apple.com/profile/hfdistribution" target="_blank" rel="noopener noreferrer">music.apple.com/hfdistribution</a></li>
-        <li><strong>Tidal:</strong> <a href="https://tidal.com/user/hfdistribution" target="_blank" rel="noopener noreferrer">tidal.com/hfdistribution</a></li>
-        <li><strong>Dwizzy.space:</strong> <a href="https://dwizzy.space/hfdistribution" target="_blank" rel="noopener noreferrer">dwizzy.space/hfdistribution</a></li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="platformy">
-    <div class="feature">
-      <h2>🎧 Platformy streamingowe i dystrybucja</h2>
-      <p>Wspieramy dystrybucję na najpopularniejszych platformach muzycznych, aby Twoja muzyka była dostępna dla jak najszerszego grona odbiorców:</p>
-      <ul>
-        <li><strong>Spotify</strong> – największa platforma streamingowa na świecie.</li>
-        <li><strong>Apple Music</strong> – doskonała integracja z ekosystemem Apple.</li>
-        <li><strong>Tidal</strong> – wysoka jakość dźwięku i ekskluzywne treści.</li>
-        <li><strong>SoundCloud</strong> – idealne miejsce dla niezależnych artystów.</li>
-        <li><strong>Deezer</strong>, <strong>Amazon Music</strong>, <strong>Google Play Music</strong> i inne.</li>
-        <li><strong>Dwizzy.space</strong> – polska platforma z dużym potencjałem.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="donate">
-    <div class="feature">
-      <h2>🙏 Donaty i wsparcie</h2>
-      <p>Jeśli podoba Ci się nasza praca i chcesz nas wesprzeć, możesz to zrobić poprzez:</p>
-      <ul>
-        <li><a href="https://buymeacoffee.com/hfdistribution" target="_blank" rel="noopener noreferrer">Buy Me a Coffee</a></li>
-        <li><a href="https://paypal.me/hfdistribution" target="_blank" rel="noopener noreferrer">PayPal</a></li>
-        <li>Przelew bankowy – skontaktuj się z nami po szczegóły</li>
-      </ul>
-      <p>Dzięki Twojemu wsparciu możemy rozwijać funkcje, dodawać nowe platformy i tworzyć jeszcze lepsze narzędzia dla artystów.</p>
-    </div>
-  </section>
-
-  <section id="support">
-    <div class="feature">
-      <h2>🛠️ Support techniczny i FAQ</h2>
-      <p>Masz pytania lub potrzebujesz pomocy technicznej? Sprawdź najczęściej zadawane pytania lub skontaktuj się z nami:</p>
-      <ul>
-        <li><strong>Jak dodać nowy utwór do dystrybucji?</strong> – W panelu artysty kliknij "Dodaj utwór", wypełnij dane i załaduj plik audio.</li>
-        <li><strong>Czy mogę edytować tekst piosenki po publikacji?</strong> – Tak, w planie Premium możesz automatycznie generować i edytować teksty.</li>
-        <li><strong>Co zrobić, jeśli moja muzyka nie pojawia się na platformie?</strong> – Skontaktuj się z nami, podając szczegóły i numer dystrybucji.</li>
-      </ul>
-      <p>Więcej informacji na <a href="https://hf.distribution.pl/support" target="_blank" rel="noopener noreferrer">hf.distribution.pl/support</a></p>
-    </div>
-  </section>
-
-  <!-- Dodane nowe zakładki -->
-
-  <section id="merch">
-    <div class="feature">
-      <h2>🛒 Merch</h2>
-      <p>Sklep z oficjalnym merchandisingiem hf.distribution.pl i naszych artystów. Sprawdź koszulki, czapki, plakaty i inne gadżety:</p>
-      <ul>
-        <li>Koszulki z limitowanymi wzorami</li>
-        <li>Czapki bejsbolówki i snapback</li>
-        <li>Plakaty i naklejki</li>
-        <li>Ekskluzywne paczki merchowe dla fanów</li>
-      </ul>
-      <p><a href="https://merch.hf.distribution.pl" target="_blank" rel="noopener noreferrer">Przejdź do sklepu</a></p>
-    </div>
-  </section>
-
-  <section id="radio">
-    <div class="feature">
-      <h2>📻 Radio</h2>
-      <p>Nasze radio online z najlepszą muzyką od artystów dystrybuowanych przez hf.distribution.pl.</p>
-      <ul>
-        <li>Stream 24/7 – różne gatunki muzyczne</li>
-        <li>Audycje na żywo i podcasty</li>
-        <li>Gościnne sety DJ-ów</li>
-        <li>Interaktywne playlisty i konkursy dla słuchaczy</li>
-      </ul>
-      <p><a href="https://radio.hf.distribution.pl" target="_blank" rel="noopener noreferrer">Posłuchaj radia</a></p>
-    </div>
-  </section>
-
-  <section id="koncerty">
-    <div class="feature">
-      <h2>🎤 Koncerty</h2>
-      <p>Organizujemy wydarzenia muzyczne i koncerty z naszymi artystami. Sprawdź nadchodzące terminy i zapisz się na wydarzenia:</p>
-      <ul>
-        <li>Kalendarz koncertów i festiwali</li>
-        <li>Możliwość zakupu biletów online</li>
-        <li>Informacje o miejscach i artystach</li>
-        <li>Relacje i nagrania z wydarzeń</li>
-      </ul>
-      <p><a href="https://koncerty.hf.distribution.pl" target="_blank" rel="noopener noreferrer">Sprawdź koncerty</a></p>
-    </div>
-  </section>
-
-  <section id="ai">
-    <div class="feature">
-      <h2>🤖 AI</h2>
-      <p>Wykorzystujemy sztuczną inteligencję, aby wspierać artystów i usprawnić proces dystrybucji:</p>
-      <ul>
-        <li>Automatyczne generowanie tekstów piosenek</li>
-        <li>Analiza trendów i statystyk streamingowych</li>
-        <li>Rekomendacje marketingowe oparte na AI</li>
-        <li>Asystent AI do tworzenia kampanii promocyjnych</li>
-      </ul>
-      <p><a href="https://ai.hf.distribution.pl" target="_blank" rel="noopener noreferrer">Dowiedz się więcej</a></p>
-    </div>
-  </section>
-
-  <section id="statystyki">
-    <div class="feature">
-      <h2>📊 Statystyki</h2>
-      <p>Zaawansowane narzędzia do monitorowania popularności i zaangażowania Twojej muzyki:</p>
-      <ul>
-        <li>Analiza odtworzeń na poszczególnych platformach</li>
-        <li>Demografia słuchaczy i ich preferencje</li>
-        <li>Raporty z kampanii marketingowych</li>
-        <li>Śledzenie wyników na smartlinkach</li>
-      </ul>
-      <p><a href="https://stats.hf.distribution.pl" target="_blank" rel="noopener noreferrer">Zobacz statystyki</a></p>
-    </div>
-  </section>
-
-  <footer>
-    <h2>© ℗ 2025 hf.distribution.pl | dwizzy.space</h2>
-  </footer>
-</body>
-</html>
+      <div id="loudness-penalty">
+        <label for="audio-file">Wybierz plik audio (mp3, wav):</label>
+        <input type="file" id="audio-file" accept="audio/*" />
+        <button id="analyze-btn">Analizuj Loudness Penalty</button>
+        <div id="
