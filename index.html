@@ -3,271 +3,225 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>hf.distribution.pl @dwizzy23_</title>
+<title>hf.distribution.pl</title>
 <style>
-  body {
-    background: #0c0f13;
-    color: #b7f0b1;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 20px;
+  /* Reset */
+  body, h1, h2, nav, ul, li, a, button {
+    margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
+
+  body {
+    background-color: #0c0f13; /* bardzo ciemne tło */
+    color: #b7f0b1; /* jasnozielony */
+  }
+
   header {
     text-align: center;
+    padding: 30px 20px 20px;
     font-size: 3rem;
     font-weight: 900;
-    margin-bottom: 10px;
-    color: #9ae2f0;
-    text-shadow: 0 0 6px #6f8fae;
+    color: #3ac569; /* flightcoreowy zielony */
+    text-shadow: 0 0 6px #2a8e47; /* ciemniejszy odcień zieleni */
   }
+
   header span.highlight {
-    color: #b7f0b1;
+    color: #b7f0b1; /* jasnozielony akcent */
   }
+
   nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
     justify-content: center;
-    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 20px 10px;
   }
+
   nav a {
-    color: #b7f0b1;
     text-decoration: none;
     padding: 10px 18px;
-    border-radius: 12px;
-    background: #1e2431;
-    box-shadow: 0 0 8px #6f8fae88;
-    font-weight: 600;
-    transition: background 0.3s;
-  }
-  nav a:hover, nav a.active {
-    background: #7fc880;
-    color: #0a0f10;
-  }
-  section {
-    max-width: 900px;
-    margin: 0 auto 40px;
-    background: #12161d;
-    padding: 25px 30px;
     border-radius: 14px;
-    box-shadow: 0 0 18px #3f506faa;
+    font-weight: 600;
+    font-size: 1.05rem;
+    background: linear-gradient(135deg, #6f7cae, #a1b7d8); /* zostawiam delikatny gradient */
+    color: #0c0f13;
+    box-shadow: 0 0 10px #7687be88;
+    transition: all 0.3s ease;
+    user-select: none;
   }
+
+  nav a:hover {
+    background: linear-gradient(135deg, #3ac569, #b7f0b1); /* teraz zielony gradient na hover */
+    color: #0a0f10;
+    box-shadow: 0 0 12px #b7f0b1cc;
+  }
+
+  nav a.active {
+    background: #3ac569;
+    color: #0a0f10;
+    font-weight: 800;
+    box-shadow: 0 0 15px #7fc880dd;
+  }
+
   h2 {
-    margin-bottom: 20px;
-    color: #9ae2f0;
-    text-shadow: 0 0 4px #6f8fae;
+    color: #3ac569;
+    text-shadow: 0 0 4px #2a8e47;
+    margin-bottom: 16px;
   }
-  /* Dystrybucja platform */
+
+  section {
+    margin: 30px auto;
+    max-width: 900px;
+    padding: 20px;
+    background-color: #121619;
+    border-radius: 12px;
+    box-shadow: 0 0 18px #276a2faa;
+  }
+
   .platform-list {
+    list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    list-style: none;
-    padding: 0;
+    gap: 18px;
+    justify-content: center;
   }
+
   .platform-list li {
-    background: #1e2431;
-    border-radius: 12px;
-    padding: 12px 16px;
-    width: 180px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 0 8px #6f8fae77;
-  }
-  .platform-list label {
-    cursor: pointer;
+    background-color: #192124;
+    border-radius: 10px;
+    padding: 12px 20px;
+    box-shadow: 0 0 8px #2a8e4777;
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #b7f0b1;
-    font-weight: 600;
-    flex-grow: 1;
+    font-weight: 700;
+    font-size: 1.1rem;
   }
-  .platform-list input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: #7fc880;
-  }
-  .icon {
+
+  .platform-list img {
     width: 28px;
     height: 28px;
-    fill: #b7f0b1;
-    flex-shrink: 0;
+    user-select: none;
   }
 
-  /* Loudness penalty */
-  #loudnessSection input[type="file"] {
-    margin-bottom: 15px;
-  }
-  #loudnessResult {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    background: #1b2028;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 12px #6f8fae88;
-  }
-  .ok {
-    color: #7fc880;
-    font-weight: 700;
-  }
-  .warn {
-    color: #f07f7f;
-    font-weight: 700;
-  }
-
-  /* Cloud upload */
-  #cloudUpload input[type="file"], #cloudUpload input[type="text"] {
-    margin-bottom: 12px;
-    padding: 6px 10px;
-    width: 100%;
-    border-radius: 8px;
-    border: none;
-  }
-  #cloudResult {
-    margin-top: 12px;
-    background: #1b2028;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: 600;
-    word-break: break-all;
-  }
-
-  /* Donate buttons */
-  .donate-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-  }
-  .donate-buttons button {
-    cursor: pointer;
-    border: none;
-    border-radius: 14px;
-    padding: 14px 28px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #0a0f10;
-    background: linear-gradient(135deg, #7fc880, #b7f0b1);
-    box-shadow: 0 0 10px #7fc880cc;
-    transition: background 0.3s;
-  }
-  .donate-buttons button:hover {
-    background: linear-gradient(135deg, #9adfa5, #d0f0c8);
-  }
-
-  /* Smartlink buttons */
-  #smartlinkOutput {
-    margin-top: 15px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .smartlink-btn {
-    background: #7fc880;
-    color: #0a0f10;
-    border-radius: 12px;
-    padding: 8px 14px;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 0 8px #7fc880cc;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .smartlink-btn svg {
+  .checkbox {
     width: 20px;
     height: 20px;
-    fill: #0a0f10;
+    border-radius: 6px;
+    border: 2px solid #3ac569;
+    cursor: pointer;
+    position: relative;
   }
 
-  input[type="text"], input[type="url"] {
-    padding: 8px 10px;
-    font-size: 1rem;
-    border-radius: 8px;
+  .checkbox.checked::after {
+    content: '✔';
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    color: #3ac569;
+    font-weight: 900;
+    font-size: 16px;
+  }
+
+  .donate-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+  }
+
+  .donate-buttons button {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px 28px;
     border: none;
-    width: 100%;
-    max-width: 450px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #3ac569, #b7f0b1);
+    color: #0a0f10;
+    box-shadow: 0 0 10px #3ac569cc;
+    transition: background 0.3s ease;
+    user-select: none;
   }
-  label {
-    display: block;
-    margin: 10px 0 6px;
+
+  .donate-buttons button:hover {
+    background: linear-gradient(135deg, #50db7d, #d0f0c8);
   }
+
+  .smartlink-btn {
+    background: #3ac569;
+    color: #0a0f10;
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-weight: 700;
+    box-shadow: 0 0 8px #3ac569cc;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  .smartlink-btn:hover {
+    background: #50db7d;
+    color: #0a0f10;
+  }
+
+  /* Dodatkowe style ikon i checkboxów do platform można dodać tutaj */
 </style>
 </head>
 <body>
 
-<header>hf.<span class="highlight">distribution</span>.pl</header>
+<header>
+  hf.<span class="highlight">distribution</span>.pl
+  <div style="font-weight: normal; font-size: 1.2rem; margin-top: 5px; color: #8dbf9f;">
+    AI Dystrybucja, Radio, Koncerty, Merch, Smartlinki, Analiza Loudness (Poprawność utworu)
+  </div>
+</header>
 
 <nav>
-  <a href="#plany">Plany</a>
-  <a href="#dystrybucja">Dystrybucja</a>
-  <a href="#loudnessSection">Loudness Penalty</a>
-  <a href="#aiTools">Narzędzia AI</a>
-  <a href="#smartlinki">Smartlinki</a>
-  <a href="#mixMaster">Mix & Master</a>
-  <a href="#cloudUpload">Cloud</a>
-  <a href="#koncerty">Koncerty</a>
-  <a href="#merch">Merch</a>
-  <a href="#radio">Radio</a>
-  <a href="#kontakt">Kontakt</a>
-  <a href="#donate">Donate</a>
+  <a href="#" class="active">Plany</a>
+  <a href="#">Dystrybucja</a>
+  <a href="#">Narzędzia AI</a>
+  <a href="#">Smartlinki</a>
+  <a href="#">Mix & Master</a>
+  <a href="#">Cloud</a>
+  <a href="#">Koncerty</a>
+  <a href="#">Merch</a>
+  <a href="#">Radio</a>
+  <a href="#">Blog</a>
+  <a href="#">Kontakt</a>
 </nav>
 
-<!-- Plany -->
-<section id="plany">
-  <h2>Plany</h2>
-  <p>Tu możesz umieścić swoje plany, cenniki, pakiety i inne info na początek strony.</p>
-</section>
-
-<!-- Dystrybucja -->
-<section id="dystrybucja">
-  <h2>Dystrybucja muzyki - wybierz platformy</h2>
+<section>
+  <h2>Dystrybucja - Platformy i Statusy</h2>
   <ul class="platform-list">
     <li>
-      <label><input type="checkbox" checked />
-      <!-- DistroKid icon simple -->
-      <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18.182A8.182 8.182 0 1 1 20.182 12 8.2 8.2 0 0 1 12 20.182zM9 7h2v10H9zM13 7h2v10h-2z"/></svg>
-      DistroKid</label>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube" />
+      YouTube API
+      <span class="checkbox checked" title="Wymagany loudness: min 3.5 dB lub 10 LUFS, max 6 dB lub 8 LUFS"></span>
     </li>
     <li>
-      <label><input type="checkbox" />
-      <!-- Shazam icon simple -->
-      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#b7f0b1" stroke-width="1" fill="none"/><path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10z" fill="#b7f0b1"/></svg>
-      Shazam</label>
+      <img src="https://seeklogo.com/images/S/soundcloud-logo-401F2034F7-seeklogo.com.png" alt="SoundCloud" />
+      SoundCloud
+      <span class="checkbox" title="Brak statusu loudness"></span>
     </li>
     <li>
-      <label><input type="checkbox" checked />
-      <!-- SoundCloud icon simple -->
-      <svg class="icon" viewBox="0 0 24 24"><path d="M3 12a6 6 0 0 1 6-6 5.972 5.972 0 0 1 3.337 1.003 8.41 8.41 0 0 1 7.088 1.94A4.5 4.5 0 0 1 21 14.5v.5H3z"/></svg>
-      SoundCloud</label>
+      <img src="https://distrokid.com/assets/dklogo-45c3e37e.svg" alt="DistroKid" style="width:28px; height:28px;" />
+      DistroKid
+      <span class="checkbox checked" title="Wymagany loudness: min 3.5 dB lub 10 LUFS, max 6 dB lub 8 LUFS"></span>
+    </li>
+    <li>
+      <img src="https://seeklogo.com/images/S/shazam-logo-10BE456BE3-seeklogo.com.png" alt="Shazam" />
+      Shazam
+      <span class="checkbox" title="Brak statusu loudness"></span>
     </li>
   </ul>
 </section>
 
-<!-- Loudness Penalty -->
-<section id="loudnessSection">
-  <h2>Loudness Penalty - Sprawdź plik audio</h2>
-  <input type="file" id="audioFile" accept="audio/*" />
-  <div id="loudnessResult">Załaduj plik, aby sprawdzić loudness.</div>
+<section>
+  <h2>Donate</h2>
+  <div class="donate-buttons">
+    <button onclick="window.open('https://buycoffee.to/hfdistribution', '_blank')">BuyCoffee</button>
+    <button onclick="window.open('https://stripe.com', '_blank')">Stripe</button>
+  </div>
 </section>
 
-<!-- Narzędzia AI -->
-<section id="aiTools">
-  <h2>Narzędzia AI</h2>
-  <p>Tu będą narzędzia AI do automatyzacji i wspomagania pracy z muzyką.</p>
-</section>
-
-<!-- Smartlinki -->
-<section id="smartlinki">
-  <h2>Generator Smartlinków</h2>
-  <label for="artistProd">Wpisz nazwę artysty, tytuł i producenta (np. dwizzy-na-haju-prod-lister):</label>
-  <input type="text" id="artistProd" placeholder="dwizzy-na-haju-prod-lister" />
-  <button onclick="generateSmartlinks()">Generuj linki i przyciski</button>
-  <div id="smartlinkOutput"></div>
-</section>
-
-<!-- Mix & Master -->
-<section id="mixMaster">
-  <h2>Mix & Master</h
+</body>
+</html>
