@@ -1,227 +1,62 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>hf.distribution.pl</title>
-<style>
-  /* Reset */
-  body, h1, h2, nav, ul, li, a, button {
-    margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  body {
-    background-color: #0c0f13; /* bardzo ciemne tło */
-    color: #b7f0b1; /* jasnozielony */
-  }
-
-  header {
-    text-align: center;
-    padding: 30px 20px 20px;
-    font-size: 3rem;
-    font-weight: 900;
-    color: #3ac569; /* flightcoreowy zielony */
-    text-shadow: 0 0 6px #2a8e47; /* ciemniejszy odcień zieleni */
-  }
-
-  header span.highlight {
-    color: #b7f0b1; /* jasnozielony akcent */
-  }
-
-  nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 18px;
-    margin: 20px 10px;
-  }
-
-  nav a {
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 14px;
-    font-weight: 600;
-    font-size: 1.05rem;
-    background: linear-gradient(135deg, #6f7cae, #a1b7d8); /* zostawiam delikatny gradient */
-    color: #0c0f13;
-    box-shadow: 0 0 10px #7687be88;
-    transition: all 0.3s ease;
-    user-select: none;
-  }
-
-  nav a:hover {
-    background: linear-gradient(135deg, #3ac569, #b7f0b1); /* teraz zielony gradient na hover */
-    color: #0a0f10;
-    box-shadow: 0 0 12px #b7f0b1cc;
-  }
-
-  nav a.active {
-    background: #3ac569;
-    color: #0a0f10;
-    font-weight: 800;
-    box-shadow: 0 0 15px #7fc880dd;
-  }
-
-  h2 {
-    color: #3ac569;
-    text-shadow: 0 0 4px #2a8e47;
-    margin-bottom: 16px;
-  }
-
-  section {
-    margin: 30px auto;
-    max-width: 900px;
-    padding: 20px;
-    background-color: #121619;
-    border-radius: 12px;
-    box-shadow: 0 0 18px #276a2faa;
-  }
-
-  .platform-list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    justify-content: center;
-  }
-
-  .platform-list li {
-    background-color: #192124;
-    border-radius: 10px;
-    padding: 12px 20px;
-    box-shadow: 0 0 8px #2a8e4777;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 1.1rem;
-  }
-
-  .platform-list img {
-    width: 28px;
-    height: 28px;
-    user-select: none;
-  }
-
-  .checkbox {
-    width: 20px;
-    height: 20px;
-    border-radius: 6px;
-    border: 2px solid #3ac569;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .checkbox.checked::after {
-    content: '✔';
-    position: absolute;
-    top: 1px;
-    left: 4px;
-    color: #3ac569;
-    font-weight: 900;
-    font-size: 16px;
-  }
-
-  .donate-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 25px;
-  }
-
-  .donate-buttons button {
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1.1rem;
-    padding: 12px 28px;
-    border: none;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #3ac569, #b7f0b1);
-    color: #0a0f10;
-    box-shadow: 0 0 10px #3ac569cc;
-    transition: background 0.3s ease;
-    user-select: none;
-  }
-
-  .donate-buttons button:hover {
-    background: linear-gradient(135deg, #50db7d, #d0f0c8);
-  }
-
-  .smartlink-btn {
-    background: #3ac569;
-    color: #0a0f10;
-    border-radius: 14px;
-    padding: 10px 18px;
-    font-weight: 700;
-    box-shadow: 0 0 8px #3ac569cc;
-    text-decoration: none;
-    user-select: none;
-  }
-
-  .smartlink-btn:hover {
-    background: #50db7d;
-    color: #0a0f10;
-  }
-
-  /* Dodatkowe style ikon i checkboxów do platform można dodać tutaj */
-</style>
+    <title>Mapa Tczew Offline</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+    <style>
+        #map {
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
+    <div id="map"></div>
 
-<header>
-  hf.<span class="highlight">distribution</span>.pl
-  <div style="font-weight: normal; font-size: 1.2rem; margin-top: 5px; color: #8dbf9f;">
-    AI Dystrybucja, Radio, Koncerty, Merch, Smartlinki, Analiza Loudness (Poprawność utworu)
-  </div>
-</header>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script>
+        var map = L.map("map").setView([54.085, 18.775], 6);
 
-<nav>
-  <a href="#" class="active">Plany</a>
-  <a href="#">distribute.hf.dwizzy.space lub zrob aby byla nazwastrony.pl;com/dystrybucja</a>
-  <a href="#">Narzędzia AI</a>
-  <a href="#">Smartlinki</a>
-  <a href="#">Mix & Master</a>
-  <a href="#">Cloud</a>
-  <a href="#">Koncerty</a>
-  <a href="#">Merch</a>
-  <a href="#">Radio</a>
-  <a href="#">Blog</a>
-  <a href="#">Kontakt</a>
-</nav>
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution: "&copy; OpenStreetMap contributors",
+        }).addTo(map);
 
-<section>
-  <h2>Dystrybucja - Platformy i Statusy</h2>
-  <ul class="platform-list">
-    <li>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube" />
-      YouTube API
-      <span class="checkbox checked" title="Wymagany loudness: min 3.5 dB lub 10 LUFS, max 6 dB lub 8 LUFS"></span>
-    </li>
-    <li>
-      <img src="https://seeklogo.com/images/S/soundcloud-logo-401F2034F7-seeklogo.com.png" alt="SoundCloud" />
-      SoundCloud
-      <span class="checkbox" title="Brak statusu loudness"></span>
-    </li>
-    <li>
-      <img src="https://distrokid.com/assets/dklogo-45c3e37e.svg" alt="DistroKid" style="width:28px; height:28px;" />
-      DistroKid
-      <span class="checkbox checked" title="Wymagany loudness: min 3.5 dB lub 10 LUFS, max 6 dB lub 8 LUFS"></span>
-    </li>
-    <li>
-      <img src="https://seeklogo.com/images/S/shazam-logo-10BE456BE3-seeklogo.com.png" alt="Shazam" />
-      Shazam
-      <span class="checkbox" title="Brak statusu loudness"></span>
-    </li>
-  </ul>
-</section>
+        var locations = [
+            ["Czerwonego Kapturka 8C", 54.09, 18.77],
+            ["Przemysława II 26", 54.0785, 18.7814],
+            ["Dworzec PKP Tczew", 54.0972, 18.7885],
+            ["EBROGym", 54.091, 18.7655],
+            ["Rokitki Park", 54.0727, 18.7584],
+            ["FlightCore Studio (Adama Mickiewicza 9/LOK U1, Warszawa)", 52.261691, 20.992713],
+            ["Metro Wilanowska", 52.1801, 21.0244],
+            ["Centrum Nauki Kopernika - schodki", 52.2413, 21.0119],
+            ["Gdańsk Brzeźno", 54.4086, 18.635],
+            ["Gdańsk Food Hall", 54.3586, 18.6466],
+            ["Ulica Lęborska Gdańsk", 54.395, 18.5788],
+            ["Przyśietnica PCA Sheder", 49.6161, 21.8644],
+            ["Ptasia 27, Zielona Góra", 51.9356, 15.5051],
+            ["Wronki Rusina", 52.7314, 16.1748],
+            ["Wronki Partyzantów 16", 52.813, 16.239],
+            ["Bulwar", 54.091796, 18.80138],
+            ["Skarpa Jana Brzechwy 16", 54.084224, 18.770991],
+            ["Itsfridaydaniel - Adres", 54.088839, 18.767644],
+            ["Kosjusz Zielona Góra", 51.935252, 15.506652],
+            ["Mickiewicza 7, Myślenice - Itsfriday Daniel", 49.8331, 19.9414],
+            ["GM2L Studio - Arkuszowa 164, Warszawa", 52.286367, 20.883803],
+            ["Polkowice - Tremixsus", 51.5039, 16.0713]
+        ];
 
-<section>
-  <h2>Donate</h2>
-  <div class="donate-buttons">
-    <button onclick="window.open('https://buycoffee.to/hfdistribution', '_blank')">BuyCoffee</button>
-    <button onclick="window.open('https://stripe.com', '_blank')">Stripe</button>
-  </div>
-</section>
-
+        locations.forEach(function (loc) {
+            L.marker([loc[1], loc[2]])
+                .addTo(map)
+                .bindPopup(loc[0])
+                .bindTooltip(loc[0]);
+        });
+    </script>
 </body>
 </html>
