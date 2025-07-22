@@ -1,0 +1,21 @@
+# HAVE FVCKED KONWERTER
+
+Glitchowy frontend do konwertowania YouTube Audio / Video.  
+Przeciągnij link → wybierz format → pobierz!
+
+## 🔧 Funkcje:
+- Pobieranie Audio / Video z YouTube
+- Glitch UI (darkmode)
+- Gotowe do wrzucenia na GitHub Pages
+
+## 🗂 Struktura:
+- `index.html` – interfejs
+- `style.css` – styl
+- `script.js` – logika UI
+- `assets/HF-ikona.ico` – favicon
+
+## 🚀 Przyszłe funkcje:
+- Połączenie z backendem (Python + yt-dlp)
+- Build jako aplikacja desktopowa (.exe)
+
+## 👾 Design by YOU & ChatGPT
