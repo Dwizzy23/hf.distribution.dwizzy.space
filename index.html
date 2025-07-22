@@ -1,155 +1,27 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <title>Mapa Tczew Offline - hf.distribution</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    />
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
-    />
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
-    />
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        #map {
-            height: 100vh;
-            width: 100vw;
-        }
-
-        .leaflet-control-layers {
-            font-size: 14px;
-        }
-
-        .custom-buttons {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .custom-buttons button {
-            display: block;
-            margin: 4px 0;
-            padding: 6px 10px;
-            border: none;
-            border-radius: 4px;
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-
-        .custom-buttons button:hover {
-            background-color: #45a049;
-        }
-
-        .legend {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: white;
-            padding: 8px 12px;
-            font-size: 12px;
-            border-radius: 5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            padding: 6px;
-            font-size: 12px;
-            background: #f0f0f0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HAVE FVCKED KONWERTER</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/HF-ikona.ico" type="image/x-icon">
 </head>
 <body>
-    <div id="map"></div>
-
-    <div class="custom-buttons">
-        <button onclick="map.setView([54.09, 18.77], 13)">Tczew</button>
-        <button onclick="map.setView([52.23, 21.01], 13)">Warszawa</button>
-        <button onclick="map.setView([54.38, 18.63], 13)">Gdańsk</button>
+  <div class="container">
+    <h1 class="glitch" data-text="HAVE FVCKED KONWERTER">HAVE FVCKED KONWERTER</h1>
+    
+    <input type="text" id="link" placeholder="Wklej link z YouTube..." />
+    
+    <div class="options">
+      <label><input type="radio" name="format" value="audio" checked> Audio</label>
+      <label><input type="radio" name="format" value="video"> Video</label>
     </div>
-
-    <div class="legend">
-        <strong>Lokalizacje:</strong><br />
-        Kliknij znacznik, aby zobaczyć opis.
-    </div>
-
-    <footer>
-        &copy; 2025 hf.distribution.dwizzy.space — mapa oparta na Leaflet + OpenStreetMap
-    </footer>
-
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-    <script>
-        var map = L.map("map").setView([54.085, 18.775], 6);
-
-        // Warstwy mapy
-        var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 19,
-            attribution: "&copy; OpenStreetMap",
-        }).addTo(map);
-
-        var topo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
-            maxZoom: 17,
-            attribution: "&copy; OpenTopoMap contributors",
-        });
-
-        var baseMaps = {
-            "OpenStreetMap": osm,
-            "OpenTopoMap": topo
-        };
-
-        L.control.layers(baseMaps).addTo(map);
-
-        // Lista lokalizacji
-        var locations = [
-            ["Dworzec PKP Tczew", 54.0972, 18.7885],
-            ["FlightCore Studio (Warszawa)", 52.261691, 20.992713],
-            ["Metro Wilanowska", 52.1801, 21.0244],
-            ["Centrum Nauki Kopernika", 52.2413, 21.0119],
-            ["Gdańsk Brzeźno", 54.4086, 18.635],
-            ["Gdańsk Food Hall", 54.3586, 18.6466],
-            ["Oliwa/Wrzeszcz Gdańsk", 54.395, 18.5788],
-            ["Przyśietnica PCA Sheder", 49.6161, 21.8644],
-            ["Wronki Rusina", 52.7314, 16.1748],
-            ["Wronki Partyzantów 16", 52.813, 16.239],
-            ["Bulwar", 54.091796, 18.80138],
-            ["Skarpa Jana Brzechwy 16", 54.084224, 18.770991],
-            ["Itsfridaydaniel - Adres", 54.088839, 18.767644],
-            ["Kosjusz Zielona Góra", 51.935252, 15.506652],
-            ["GM2L Studio - Warszawa", 52.286367, 20.883803],
-            ["Polkowice - Tremixsus", 51.5039, 16.0713]
-        ];
-
-        var markers = L.markerClusterGroup();
-
-        locations.forEach(function (loc) {
-            var marker = L.marker([loc[1], loc[2]])
-                .bindPopup("<strong>" + loc[0] + "</strong>")
-                .bindTooltip(loc[0]);
-            markers.addLayer(marker);
-        });
-
-        map.addLayer(markers);
-    </script>
+    
+    <button onclick="startConversion()">KONWERTUJ</button>
+    
+    <p id="status"></p>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
